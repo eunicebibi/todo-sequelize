@@ -19,7 +19,6 @@ router.get('/:id', (req, res) => {
   return Todo.findOne({ 
    where: { id, UserId }
   })
-    .lean()
     .then(todo => res.render('detail', { todo: todo.toJSON()}))
     .catch(error => console.log(error))
 })
@@ -29,12 +28,11 @@ router.get('/:id/edit', (req, res) => {
   return Todo.findOne({ 
    where:{ id, UserId }
   })
-    .lean()
     .then(todo => res.render('edit', { todo: todo.get() }))
     .catch(error => console.log(error))
 })
 
-router.get('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const UserId = req.user.id
   const id = req.params.id
   const { name, isDone } = req.body
